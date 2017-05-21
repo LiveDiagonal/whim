@@ -27,6 +27,7 @@ app.get('/command', function(request, response) {
 });
 
 app.post('/whim', function(req, res, next) {
+  console.log(req);
   var twiml = new MessagingResponse();
   twiml.message(req.query.Body);
   res.writeHead(200, {'Content-Type': 'text/xml'});
