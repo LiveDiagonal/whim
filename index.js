@@ -36,7 +36,7 @@ app.post('/command', function(request, response) {
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
   var processResult = function(result) {
-    twiml.message(formatForTwilio(result.message));
+    twiml.message(result.message);
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
   }
@@ -49,10 +49,6 @@ app.listen(app.get('port'), function() {
 })
 
 // Workspace
-
-var formatForTwilio = function (message) {
-  return message.replace(/\n/g, "%0a")
-}
 
 var processCommand = function (commandStr, processResult) {
   var commandObj = parseCommand(commandStr)
