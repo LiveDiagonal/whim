@@ -70,7 +70,7 @@ var processCommand = function (commandStr, processResult) {
 
 var getAppUrl = function(name) {
   return {
-    "mlb": "http://whim.mlb.livediagonal.com/game"
+    "mlb": "http://whim.mlb.livediagonal.com/execute"
   }[name]
 }
 
