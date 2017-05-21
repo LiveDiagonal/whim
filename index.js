@@ -51,7 +51,7 @@ app.listen(app.get('port'), function() {
 // Workspace
 
 var formatForTwilio = function (message) {
-  message.replace(/\n/, "%0a")
+  return message.replace(/\n/g, "%0a")
 }
 
 var processCommand = function (commandStr, processResult) {
