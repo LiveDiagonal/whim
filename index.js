@@ -21,22 +21,22 @@ app.get('/', function (request, response) {
 });
 
 app.post('/command', function(request, response) {
-  var process_result = function (result) {
+  var processResult = function (result) {
     response.json(result);
   };
 
-  process_command(request.body.command, process_result);
+  processCommand(request.body.command, processResult);
 });
 
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
-  var process_result = function(result) {
+  var processResult = function(result) {
     twiml.message(result.message);
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
   }
 
-  process_command(req.body.Body, process_result);  
+  processCommand(req.body.Body, processResult);  
 });
 
 app.listen(app.get('port'), function() {
@@ -49,7 +49,7 @@ var commands = {
   "mlb": "http://whim.mlb.livediagonal.com/game"
 }
 
-var process_command = function (command, process_result) {
+var processCommand = function (command, processResult) {
   var app = command.split(" ")[0];
   var url = commands[app];
 
@@ -60,10 +60,10 @@ var process_command = function (command, process_result) {
         team: command.split(" ")[1]
       }
     }, function (error, response, body) {
-      process_result(JSON.parse(body));
+      processResult(JSON.parse(body));
     });
   } else {
-    process_result({
+    processResult({
       success: false,
       message: "Failure: app " + app + " not found."
     });
