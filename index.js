@@ -28,8 +28,7 @@ app.get('/command', function(request, response) {
 
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
-  twiml.message(req.body.Body);
-
+  twiml.message(req.query.Body);
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });
