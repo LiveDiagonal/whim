@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.23/css/uikit.min.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="uk-flex uk-flex-column uk-height-1-1">
+   <div class="uk-flex-none uk-text-center uk-padding-small">
+    Whim
+  </div>
+  <div class="uk-flex-1 uk-flex-bottom uk-flex uk-flex-column uk-flex-bottom" id="output">
+  </div>
+  <div class="uk-flex-none">
+    <form id="form">
+      > <input type="text" id="command" name="command">
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#form").on("submit", function (event) {
+    var command = $("#command").val();
+
+    $("#output").append("<div class='output-row'>" + command + "</div>");
+    $('#output').scrollTop($('#output')[0].scrollHeight);
+
+    $("#command").val(""); 
+
+    var req = $.ajax({
+     type: "POST",
+     url: "/command",
+     data: {
+      command: command
+    }
+  });
+
+    req.done(function (data) {
+     $("#output").append("<div class='output-row'>" + data.message + "</div>");
+     $('#output').scrollTop($('#output')[0].scrollHeight);
+   });
+
+
+    event.preventDefault();
+    event.stopPropagation()
+  });
+</script>
+
+<style>
+ html, body {
+  height: 100%;
+}
+
+body {
+  padding: 5px;
+}
+
+#form {
+  line-height: 24px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+#command {
+  display: inline-block;
+  border: none;
+  outline: none;
+
+  line-height: 24px;
+  font-size: 18px;
+}
+
+#output {
+  overflow-y: auto;
+}
+
+.output-row {
+  width: 100%;
+
+  line-height: 24px;
+  font-size: 18px;
+}
+
+.output-row:first-child {
+  margin-top: auto;
+}
+</style>
+</body>
+</html>

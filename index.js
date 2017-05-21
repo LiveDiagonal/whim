@@ -1,12 +1,23 @@
 var express = require('express');
 var app = express();
 
-var games = require('./services/games');
-
 app.set('port', (process.env.PORT || 5000));
 
-app.get('/command', function(request, response) {
-	response.send("ok");
+app.use(express.static(__dirname + '/public'));
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+
+app.get('/', function (request, response) {
+	response.render('pages/index');
+});
+
+app.post('/command', function(request, response) {
+	response.send({
+		success: true,
+		message: "hello world"
+	});
 });
 
 app.listen(app.get('port'), function() {
