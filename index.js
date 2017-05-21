@@ -56,8 +56,7 @@ var process_command = function (command, process_result) {
         team: command.split(" ")[1]
       }
     }, function (error, response, body) {
-      console.log(body);
-      process_result(body);
+      process_result(JSON.parse(body));
     });
   } else {
     process_result({

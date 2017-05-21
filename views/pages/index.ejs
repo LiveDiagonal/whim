@@ -38,8 +38,7 @@
     });
 
     req.done(function (data) {
-      var message = JSON.parse(data).message;
-     $("#output").append("<div class='output-row'>" + message + "</div>");
+     $("#output").append("<div class='output-row'>" + data.message + "</div>");
      $('#output').scrollTop($('#output')[0].scrollHeight);
    });
 
