@@ -11,7 +11,7 @@ var MessagingResponse = twilio.twiml.MessagingResponse;
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
+app.use(bodyParser());
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -29,9 +29,8 @@ app.post('/command', function(request, response) {
 });
 
 app.post('/whim', function(req, res, next) {
-  console.log(req);
   var twiml = new MessagingResponse();
-  twiml.message(req.query.Body);
+  twiml.message(req.body.Body);
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });
