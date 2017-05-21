@@ -36,16 +36,17 @@ app.post('/command', function(request, response) {
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
   var processResult = function(result) {
-    twiml.message(result.message);
-    res.writeHead(200, {'Content-Type': 'text/xml'});
-    res.end(twiml.toString());
+    // hack for annoying trial message
+    twiml.message("\n" + result.message)
+    res.writeHead(200, {'Content-Type': 'text/xml'})
+    res.end(twiml.toString())
   }
 
-  processCommand(req.body.Body, processResult);  
+  processCommand(req.body.Body, processResult)
 })
 
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+  console.log('Node app is running on port', app.get('port'))
 })
 
 // Workspace
