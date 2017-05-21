@@ -1,8 +1,6 @@
 var express = require('express');
 var app = express();
 
-var games = require('./services/games');
-
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/command', function(request, response) {
