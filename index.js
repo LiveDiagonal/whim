@@ -6,7 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
 var twilio = require('twilio');
-var twilioClient = twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
+var MessagingResponse = twilio.twiml.MessagingResponse;
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -17,7 +17,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (request, response) {
-	response.render("pages/index")
+  response.render("pages/index")
 });
 
 app.post('/command', function(request, response) {
@@ -29,16 +29,11 @@ app.post('/command', function(request, response) {
 });
 
 app.post('/whim', function(req, res, next) {
-  twilioClient.messages.create({
-    body: req.body.Body,
-    to: process.env.SMS_TO,
-    from: process.env.SMS_FROM
-  })
-  .then((responseData) => {
-    res.writeHead(200, {'Content-Type': 'text/xml'});
-    res.end(responseData.body);
-  })
-  .catch(next)
+  console.log(req);
+  var twiml = new MessagingResponse();
+  twiml.message(req.query.Body);
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
 app.listen(app.get('port'), function() {
