@@ -3,6 +3,7 @@ require('dotenv').config()
 var express = require('express')
 var app = express()
 
+
 var bodyParser = require('body-parser')
 var request = require('request')
 var twilio = require('twilio')
@@ -35,7 +36,7 @@ app.post('/command', function(request, response) {
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
   var processResult = function(result) {
-    twiml.message(result.message);
+    twiml.message(formatForTwilio(result.message));
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
   }
@@ -49,6 +50,9 @@ app.listen(app.get('port'), function() {
 
 // Workspace
 
+var formatForTwilio = function (message) {
+  message.replace(/\n/, "%0a")
+}
 
 var processCommand = function (commandStr, processResult) {
   var commandObj = parseCommand(commandStr)
