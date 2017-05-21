@@ -37,7 +37,7 @@ app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
   var processResult = function(result) {
     // hack for annoying trial message
-    twiml.message("\n" + result.message)
+    twiml.message("-\n" + result.message)
     res.writeHead(200, {'Content-Type': 'text/xml'})
     res.end(twiml.toString())
   }
