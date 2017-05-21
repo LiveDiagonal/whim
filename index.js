@@ -47,6 +47,7 @@ app.listen(app.get('port'), function() {
 
 
 var processCommand = function (commandStr, processResult) {
+  console.log(commandStr);
   var commandObj = parseCommand(commandStr)
   var appUrl = getAppUrl(commandObj.app)
 
