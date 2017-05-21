@@ -30,9 +30,13 @@ app.post('/command', function(request, response) {
 
 app.post('/whim', function(req, res, next) {
   var twiml = new MessagingResponse();
-  twiml.message(req.body.Body);
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  var process_result = function(result) {
+    twiml.message(result.message);
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }
+
+  process_command(req.body.Body, process_result);  
 });
 
 app.listen(app.get('port'), function() {
