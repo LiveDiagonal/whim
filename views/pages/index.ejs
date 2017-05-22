@@ -37,8 +37,8 @@
       })
     });
 
-    req.done(function (data) {
-     $("#output").append("<div class='output-row'>" + data.message + "</div>");
+    req.done(function (message) {
+     $("#output").append("<div class='output-row'>" + message + "</div>");
      $('#output').scrollTop($('#output')[0].scrollHeight);
    });
 
